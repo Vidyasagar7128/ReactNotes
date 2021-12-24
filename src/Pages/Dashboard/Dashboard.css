@@ -1,0 +1,26 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+.maindash{
+    height: 100%;
+    display: flex;
+}
+.leftdash{
+    width: 18%;
+    height: 90vh;
+}
+.rightdash{
+    width: 82%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+.allnotesdash{
+    margin: 50px auto;
+    display: flex;
+}
+.notesdash{
+    display: flex;
+    flex-direction: row;
+}

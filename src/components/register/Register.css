@@ -1,0 +1,108 @@
+body{
+    padding: 0;
+    margin: 0;
+    height: 90%;
+}
+input{
+    height: 35px;
+}
+.main{
+    margin: 75px auto;
+    padding: 50px 30px;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border: 1px solid #DADCE0;
+    border-radius: 10px;
+}
+.heading{
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.passwords{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.names{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.names input{
+    width: 100%;
+    border-radius: 4px; 
+}
+.passwords{
+    padding-top: 30px;
+    padding-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+.passwords input{
+    width: 100%;
+    border-radius: 4px; 
+}
+.username{
+    padding-top: 20px;
+}
+.emailbtn, .btn{
+    border: none;
+    color: #4688F1;
+    font-weight: 600;
+    background-color: none;
+    box-shadow: none;
+    margin-left: -13px;
+}
+.emailbtn:hover{
+    background-color: rgb(239, 249, 253);
+    color: #3B6AB4;
+    border-radius: 3px;
+}
+.btn:hover{
+    background-color: rgb(239, 249, 253);
+    color: #3B6AB4;
+    border-radius: 3px;
+}
+.next{
+    padding-top: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.nextbtn{
+    background-color: #4688F1;
+    color: white;
+    font-weight: 600;
+    border-radius: 4px;
+}
+.nextbtn:hover{
+    color: white;
+    background-color: #1B66CA
+}
+.right .img{
+    height: 250px;
+    width: 250px;
+}
+.right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.names input{
+    height: 40px;
+}
+.passwords input{
+    height: 40px;
+}
+.acctext{
+    display: block;
+    font-size: 16px;
+    width: 200px;
+    text-align: center;
+}
