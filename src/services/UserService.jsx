@@ -43,3 +43,35 @@ export const changeColor = async (id, color) => {
     }
     return await axios.put(`https://localhost:44352/api/Notes/color?noteId=${id}`, color, config)
 }
+
+export const moveToTrash = async (id) => {
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        }
+    }
+    return await axios.put(`https://localhost:44352/api/Notes/trash?noteId=${id}`, null, config)
+}
+export const deleteNote = async (id) => {
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        }
+    }
+    return await axios.delete(`https://localhost:44352/api/Notes/delete?NoteId=${id}`, config)
+}
+
+export const pinUnPinNote = async (id) => {
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        }
+    }
+    return await axios.put(`https://localhost:44352/api/Notes/pin?noteId=${id}`, null, config)
+}

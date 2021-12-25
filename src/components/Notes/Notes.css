@@ -37,6 +37,7 @@
     justify-content: space-between;
     align-items: center;
     padding-right: 10px;
+    line-height: 1;
 }
 .noteheading button {
     color: transparent;
@@ -85,4 +86,22 @@
 .allmainnotes:hover button{
     color: black;
     opacity: 0.71;
+}
+.noteiconstrash{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    color: transparent;
+    padding-left: 5px;
+}
+.noteiconstrash .hovericonsnotetrash{
+    width: 30px;
+    background: none;
+    border: none;
+    padding-top: 5px;
+}
+.hovericonsnotetrash:hover{
+    background-color: #f1efef;
+    border-radius: 50%;
 }

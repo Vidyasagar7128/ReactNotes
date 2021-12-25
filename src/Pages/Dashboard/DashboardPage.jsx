@@ -6,22 +6,25 @@ import MenuComponent from '../../components/SideMenu/MenuComponent'
 import NoteTwoComponent from '../../components/CreateNotes/NoteTwo/NoteTwoComponent'
 import NotesComponent from '../../components/Notes/NotesComponent'
 import { getAllNotes } from '../../services/UserService'
+import { useLocation } from "react-router-dom";
+
 
 function DashboardPage() {
     const [changeNote, setchangeNote] = useState(false)
     const [notes, setnotes] = useState([])
     const [sidebar, setSidebar] = useState(false)
+    let location = useLocation();
 
     useEffect(() => {
         allNotes()
         console.log('useEffect')
     }, [])
-
+    console.log(location.pathname)
     const allNotes = () => {
         getAllNotes().then((response) => {
             setnotes(response.data.data)
-            var filterData = response.data.data.filter((e) => e.status == 1)
-            console.log('Filter Data: ', filterData)
+            // var filterData = response.data.data.filter((e) => e.status == 1)
+            // console.log('Filter Data: ', filterData)
         }).catch((e) => {
             console.log(e)
         })
@@ -47,12 +50,11 @@ function DashboardPage() {
                     </div>
                     <div className='rightdash'>
                         {
-                            changeNote ? <NoteTwoComponent clickHandler={clickHandler} allNotes={allNotes} /> : <NoteOneComponent clickHandler={clickHandler} />
+                            changeNote ? location.pathname === "/dashboard" ? <NoteTwoComponent clickHandler={clickHandler} allNotes={allNotes} /> : null : location.pathname === "/dashboard" ? <NoteOneComponent clickHandler={clickHandler} /> : null
                         }
                         <div className='allnotesdash'>
-                            <div className='pindash'></div>
                             <div className='notesdash' style={{ flexWrap: 'wrap', paddingRight: '30px' }}>
-                                <NotesComponent notes={notes} allNotes={allNotes} />
+                                <NotesComponent location={location.pathname} notes={notes} allNotes={allNotes} />
                             </div>
                         </div>
                     </div>

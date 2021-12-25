@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Notes.css'
 import ColorPopup from './../Colors/ColorPopperComponent'
-import { putInArchive } from '../../services/UserService'
+import { moveToTrash, putInArchive, deleteNote, pinUnPinNote } from '../../services/UserService'
+import "antd/dist/antd.css";
+import { Input, Modal } from 'antd';
 
-function NotesComponent({ status, notes, filterData, allNotes }) {
+
+function NotesComponent({ location, notes, allNotes }) {
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
 
     const putNoteInArchive = (id) => {
         putInArchive(id).then((res) => {
@@ -15,19 +32,63 @@ function NotesComponent({ status, notes, filterData, allNotes }) {
         })
         console.log(id)
     }
+    const deleteNotes = (id) => {
+        console.log(id)
+        deleteNote(id).then((res) => {
+            console.log(res)
+            allNotes()
+        }).catch((e) => {
+            console.log(e)
+        })
+    }
+    const restoreNotes = (id) => {
+        moveToTrash(id).then((res) => {
+            console.log(res)
+            console.log(id)
+            allNotes()
+        }).catch((e) => {
+            console.log(e)
+        })
+    }
+    const pinUnPin = (id) => {
+        pinUnPinNote(id).then((res) => {
+            allNotes()
+        }).catch((e) => {
+            console.log(e)
+        })
+    }
+    const removeNote = (data) => {
+        console.log(data)
+    }
     return (
         <>
             {
-                notes.map(data => {
+                notes.filter((e) => {
+                    if (location === "/dashboard") {
+                        if (e.status === 0) {
+                            return e
+                        }
+                    } else if (location === "/archive") {
+                        if (e.status === 1) {
+                            return e
+                        }
+                    }
+                    if (location === "/trash") {
+                        if (e.status === 2) {
+                            return e
+                        }
+                    }
+                }).map(data => {
                     return <div key={data.noteId} className='notesdata'>
                         <div className='allmainnotes' style={{ backgroundColor: data.theme }}>
                             <div className='noteheading'>
-                                <p className='shownotetitle' style={{ paddingLeft: '12px' }}>{data.title}</p>
-                                <button className="notepin"><i className="material-icons-outlined"
-                                    style={{ fontSize: '19px' }}>push_pin</i></button>
+                                <p onClick={showModal} className='shownotetitle' style={{ paddingLeft: '12px' }}>{data.title}</p>
+                                <button className="notepin" onClick={() => pinUnPin(data.noteId)}>{data.pin === false ? <i className="material-icons-outlined"
+                                    style={{ fontSize: '19px' }}>push_pin</i> : <i className="material-icons"
+                                        style={{ fontSize: '19px' }}>push_pin</i>}</button>
                             </div>
-                            <p style={{ paddingLeft: '12px' }}>{data.body}</p>
-                            <div className='noteicons'>
+                            <p onClick={showModal} style={{ paddingLeft: '12px' }}>{data.body}</p>
+                            {location !== "/trash" ? <div className='noteicons'>
                                 <button className="hovericonsnote"><i className="material-icons-outlined"
                                     style={{ fontSize: '19px' }}>add_alert</i></button>
                                 <button className="hovericonsnote"><i className="material-icons-outlined"
@@ -35,12 +96,28 @@ function NotesComponent({ status, notes, filterData, allNotes }) {
                                 <ColorPopup action='Update' noteId={data.noteId} allNotes={allNotes} />
                                 <button className="hovericonsnote"><i className="material-icons-outlined"
                                     style={{ fontSize: '19px' }}>insert_photo</i></button>
-                                <button className="hovericonsnote" onClick={() => putNoteInArchive(data.noteId)}><i className="material-icons-outlined"
-                                    style={{ fontSize: '19px' }}>archive</i></button>
-                                <button className="hovericonsnote"><i className="material-icons-outlined"
+                                <button className="hovericonsnote" onClick={() => putNoteInArchive(data.noteId)}>{location === "/archive"
+                                    ?
+                                    <i className="material-icons-outlined"
+                                        style={{ fontSize: '19px' }}>unarchive</i>
+                                    : <i className="material-icons-outlined"
+                                        style={{ fontSize: '19px' }}>archive</i>}</button>
+                                <button className="hovericonsnote" onClick={() => removeNote(data.noteId)}
+                                ><i className="material-icons-outlined"
                                     style={{ fontSize: '19px' }}>more_vert</i></button>
+                            </div> : <div className='noteiconstrash'>
+                                <button className="hovericonsnotetrash" onClick={() => deleteNotes(data.noteId)}><i className="material-icons-outlined"
+                                    style={{ fontSize: '19px' }}>delete_forever</i></button>
+                                <button className="hovericonsnotetrash" onClick={() => restoreNotes(data.noteId)}><i className="material-icons-outlined"
+                                    style={{ fontSize: '19px' }}>restore_from_trash</i></button>
                             </div>
+                            }
+                            <Modal key={data.noteId} title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                                <Input />
+                                <Input />
+                            </Modal>
                         </div>
+
                     </div>
                 })
             }

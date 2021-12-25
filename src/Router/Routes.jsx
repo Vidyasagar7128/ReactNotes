@@ -27,6 +27,9 @@ function Routes() {
                     <Route path="/archive">
                         <DashboardPage />
                     </Route>
+                    <Route path="/trash">
+                        <DashboardPage />
+                    </Route>
                 </Switch>
             </Router>
         </>

@@ -6,10 +6,6 @@ import Tooltip from '@mui/material/Tooltip';
 
 function HeaderComponent({ sidebar, setSidebar }) {
 
-
-    const sidebarPosition = () => {
-        setSidebar(!sidebar)
-    }
     return (
         <>
             <div className="headerheader">
