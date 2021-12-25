@@ -83,7 +83,7 @@ function NoteTwoComponent({ reason, clickHandler, allNotes, allNotesFromNotes, c
     return (
         <>
             <ClickAwayListener onClickAway={handleClickAway}>
-                <div className="addnotestwo" style={{ backgroundColor: reason === "Update" ? currentNote.theme : notedata.theme, width: reason === "Update" ? '100%' : null, height: reason === "Update" ? '100%' : null }}>
+                <div className="addnotestwo" style={{ backgroundColor: reason === "Update" ? currentNote.theme === "" ? 'white' : currentNote.theme : notedata.theme, width: reason === "Update" ? '100%' : null, height: reason === "Update" ? '100%' : null }}>
                     <div className="titlestwo">
                         {reason === "Create" ? <Input type="text" placeholder="Title" className="titletwo"
                             style={{ fontSize: '17px', color: 'rgb(41, 41, 41)', backgroundColor: 'transparent' }} onChange={noteTitle} /> :
@@ -93,7 +93,7 @@ function NoteTwoComponent({ reason, clickHandler, allNotes, allNotesFromNotes, c
                         <button className="optiontwo btntwo" onClick={() => pinUnPinNotes(currentNoteData.noteId)}>
                             {reason === "Update" ? currentNoteData.pin ? <i className="material-icons" style={{ fontSize: '19px' }}>push_pin</i> :
                                 <i className="material-icons-outlined" style={{ fontSize: '19px' }}>push_pin</i> :
-                                <i className="material-icons" style={{ fontSize: '19px' }}>push_pin</i>}
+                                <i className="material-icons-outlined" style={{ fontSize: '19px' }}>push_pin</i>}
                         </button>
                     </div>
                     {reason === "Create" ? <Input ref={ref} type="text" name="body" style={{ fontSize: '14px', color: 'rgb(41, 41, 41)', backgroundColor: 'transparent' }}

@@ -57,7 +57,7 @@ function NotesComponent({ location, notes, allNotes }) {
             console.log(e)
         })
     }
-    const restoreNotes = (id) => {
+    const restoreOrTrashNotes = (id) => {
         moveToTrash(id).then((res) => {
             console.log(res)
             console.log(id)
@@ -73,9 +73,14 @@ function NotesComponent({ location, notes, allNotes }) {
             console.log(e)
         })
     }
-    const removeNote = (data) => {
-        console.log(data)
-    }
+    // const removeNote = (data) => {
+    //     console.log(data)
+    //     moveToTrash(id).then((res) => {
+    //         allNotes()
+    //     }).catch((e) => {
+    //         console.log(e)
+    //     })
+    // }
     return (
         <>
             {
@@ -118,13 +123,13 @@ function NotesComponent({ location, notes, allNotes }) {
                                         style={{ fontSize: '19px' }}>unarchive</i>
                                     : <i className="material-icons-outlined"
                                         style={{ fontSize: '19px' }}>archive</i>}</button>
-                                <button className="hovericonsnote" onClick={() => removeNote(data.noteId)}
+                                <button className="hovericonsnote" onClick={() => restoreOrTrashNotes(data.noteId)}
                                 ><i className="material-icons-outlined"
                                     style={{ fontSize: '19px' }}>more_vert</i></button>
                             </div> : <div className='noteiconstrash'>
                                 <button className="hovericonsnotetrash" onClick={() => deleteNotes(data.noteId)}><i className="material-icons-outlined"
                                     style={{ fontSize: '19px' }}>delete_forever</i></button>
-                                <button className="hovericonsnotetrash" onClick={() => restoreNotes(data.noteId)}><i className="material-icons-outlined"
+                                <button className="hovericonsnotetrash" onClick={() => restoreOrTrashNotes(data.noteId)}><i className="material-icons-outlined"
                                     style={{ fontSize: '19px' }}>restore_from_trash</i></button>
                             </div>
                             }
