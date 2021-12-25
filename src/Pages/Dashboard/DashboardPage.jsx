@@ -50,7 +50,7 @@ function DashboardPage() {
                     </div>
                     <div className='rightdash'>
                         {
-                            changeNote ? location.pathname === "/dashboard" ? <NoteTwoComponent clickHandler={clickHandler} allNotes={allNotes} /> : null : location.pathname === "/dashboard" ? <NoteOneComponent clickHandler={clickHandler} /> : null
+                            changeNote ? location.pathname === "/dashboard" ? <NoteTwoComponent reason="Create" clickHandler={clickHandler} allNotes={allNotes} /> : null : location.pathname === "/dashboard" ? <NoteOneComponent clickHandler={clickHandler} /> : null
                         }
                         <div className='allnotesdash'>
                             <div className='notesdash' style={{ flexWrap: 'wrap', paddingRight: '30px' }}>

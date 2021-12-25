@@ -75,3 +75,14 @@ export const pinUnPinNote = async (id) => {
     }
     return await axios.put(`https://localhost:44352/api/Notes/pin?noteId=${id}`, null, config)
 }
+
+export const UpdateNote = async (note) => {
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        }
+    }
+    return await axios.put(`https://localhost:44352/api/Notes/update`, note, config)
+}

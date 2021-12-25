@@ -2,25 +2,41 @@ import React, { useState } from 'react'
 import './Notes.css'
 import ColorPopup from './../Colors/ColorPopperComponent'
 import { moveToTrash, putInArchive, deleteNote, pinUnPinNote } from '../../services/UserService'
-import "antd/dist/antd.css";
-import { Input, Modal } from 'antd';
 
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import NoteTwoComponent from '../CreateNotes/NoteTwo/NoteTwoComponent';
 
 function NotesComponent({ location, notes, allNotes }) {
 
-    const [isModalVisible, setIsModalVisible] = useState(false);
-
-    const showModal = () => {
-        setIsModalVisible(true);
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '600px',
+        height: 'auto',
     };
 
-    const handleOk = () => {
-        setIsModalVisible(false);
-    };
+    const [currentObj, setCurrentObj] = useState({})
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = (obj) => {
+        setOpen(true);
+        setCurrentObj(obj)
+    }
+    const handleClose = () => setOpen(false);
+    const [changeNote, setchangeNote] = useState(false)
 
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
+
+
+    const clickHandler = (data) => {
+        if (data) {
+            setchangeNote(true)
+        } else {
+            setchangeNote(false)
+        }
+    }
 
     const putNoteInArchive = (id) => {
         putInArchive(id).then((res) => {
@@ -82,12 +98,12 @@ function NotesComponent({ location, notes, allNotes }) {
                     return <div key={data.noteId} className='notesdata'>
                         <div className='allmainnotes' style={{ backgroundColor: data.theme }}>
                             <div className='noteheading'>
-                                <p onClick={showModal} className='shownotetitle' style={{ paddingLeft: '12px' }}>{data.title}</p>
+                                <p className='shownotetitle' style={{ paddingLeft: '12px' }}>{data.title}</p>
                                 <button className="notepin" onClick={() => pinUnPin(data.noteId)}>{data.pin === false ? <i className="material-icons-outlined"
                                     style={{ fontSize: '19px' }}>push_pin</i> : <i className="material-icons"
                                         style={{ fontSize: '19px' }}>push_pin</i>}</button>
                             </div>
-                            <p onClick={showModal} style={{ paddingLeft: '12px' }}>{data.body}</p>
+                            <p onClick={() => handleOpen(data)} style={{ paddingLeft: '12px' }}>{data.body}</p>
                             {location !== "/trash" ? <div className='noteicons'>
                                 <button className="hovericonsnote"><i className="material-icons-outlined"
                                     style={{ fontSize: '19px' }}>add_alert</i></button>
@@ -112,15 +128,21 @@ function NotesComponent({ location, notes, allNotes }) {
                                     style={{ fontSize: '19px' }}>restore_from_trash</i></button>
                             </div>
                             }
-                            <Modal key={data.noteId} title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                                <Input />
-                                <Input />
-                            </Modal>
                         </div>
 
                     </div>
                 })
             }
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <NoteTwoComponent reason="Update" currentNote={currentObj} handleClose={handleClose} clickHandler={clickHandler} allNotesFromNotes={allNotes} />
+                </Box>
+            </Modal>
         </>
     )
 }
